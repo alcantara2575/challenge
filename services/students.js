@@ -17,6 +17,23 @@ async function getMultiple(page = 1){
   }
 }
 
+async function getData(id){
+    console.log(
+        `SELECT * FROM students WHERE id=` + id
+    )
+    const result = await db.query(
+      `SELECT * FROM students WHERE id=` + id
+    );
+  
+    let message = 'There are not data for id '+id;
+  
+    if (result.length > 0) {
+      return result;
+    }
+    else  
+        return {message};
+  }
+
 async function create(data){
     const result = await db.query(
       `INSERT INTO students (firstName, lastName, email, age, grade) 
@@ -71,6 +88,7 @@ async function remove(id){
   
 module.exports = {
     getMultiple,
+    getData,
     create,
     update,
     remove

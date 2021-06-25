@@ -12,6 +12,15 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+router.get('/:id', async function(req, res, next) {
+    try {
+      res.json(await students.getData(req.params.id));
+    } catch (err) {
+      console.error(`Some problems getting data`, err.message);
+      next(err);
+    }
+  });
+
 router.post('/', async function(req, res, next) {
     try {
       res.json(await students.create(req.body));
