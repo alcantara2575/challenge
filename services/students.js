@@ -34,8 +34,44 @@ async function create(data){
     }
   return {message};
 }
+
+async function update(id, data){
+    const result = await db.query(
+        `UPDATE students 
+        SET 
+        firstName="`+ data.firstName + `",
+        LastName="`+ data.lastName +`",
+        email="`+ data.email +`",
+        age=` + data.age + `,
+        grade=` + data.grade + 
+        ` WHERE id = `+ id  
+    );
+  
+    let message = 'Error updating info';
+  
+    if (result.affectedRows) {
+      message = 'Student updated successfully';
+    }
+  return {message};
+}
+
+async function remove(id){
+    const result = await db.query(
+      `DELETE FROM students WHERE id=` + id
+    );
+  
+    let message = 'Error in deleting programming language';
+  
+    if (result.affectedRows) {
+      message = 'Programming language deleted successfully';
+    }
+  
+    return {message};
+  }
   
 module.exports = {
     getMultiple,
-    create
+    create,
+    update,
+    remove
   }

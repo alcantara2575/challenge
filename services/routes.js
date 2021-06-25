@@ -21,4 +21,22 @@ router.post('/', async function(req, res, next) {
     }
   });
 
+router.put('/:id', async function(req, res, next) {
+    try {
+      res.json(await students.update(req.params.id, req.body));
+    } catch (err) {
+      console.error(`Error updating data`, err.message);
+      next(err);
+    }
+  });
+
+router.delete('/:id', async function(req, res, next) {
+    try {
+      res.json(await students.remove(req.params.id));
+    } catch (err) {
+      console.error(`Some problems for remove data`, err.message);
+      next(err);
+    }
+  });
+
 module.exports = router;
