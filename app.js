@@ -1,24 +1,25 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const studentsDataRouter = require('./services/routes');
 
 const app = express();
-const port = 3000;
+const port = 3080;
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
 
+//for test connection
 app.get('/', (req, res) => {
-  res.json({'message': 'ok'});
+  res.json({'message': 'Wellcome, app is running'});
 })
 
+//pass router for file inside /students
 app.use('/students', studentsDataRouter);
 
-/* Error handler middleware */
+// Error handler middleware 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     console.error(err.message, err.stack);
@@ -26,8 +27,6 @@ app.use((err, req, res, next) => {
     return;
   });
 
-  
-
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`This app is running at http://localhost:${port}`)
 });
