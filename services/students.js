@@ -4,9 +4,14 @@ const config = require('../config');
 
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
+  const [countQuery] = await db.query(`SELECT count(id) FROM students`);
   const rows = await db.query(`SELECT * FROM students LIMIT `+ offset + `,` + config.listPerPage);
   const data = helper.emptyOrRows(rows);
-  const meta = {page};
+  const countData = countQuery[`count(id)`];
+  const meta = {
+    page, 
+    countData
+  };
 
   return {
     data,
